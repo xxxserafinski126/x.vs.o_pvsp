@@ -1,0 +1,347 @@
+#include <iostream>
+#include <conio.h>
+#include <windows.h>
+#include <ctime>
+
+using namespace std;
+
+void plansza(char tab[]);
+
+void pvspp1(char *tab,bool &ps,int pozycja,char p1,char p2);
+
+void pvspp2(char *tab,bool &ps,int pozycja,char p1,char p2);
+
+void pvsp(char *tab);
+
+void powitanie();
+
+bool sprawdzanie(char tab[]);
+
+int kontrolaznakow();
+
+
+
+int main()
+{
+    char tab[9]= {'0','1','2','3','4','5','6','7','8'}; //deklaracja g³ownej tabeli i przypisanie do niej wartoœci dla lepszej orientacji gracza ale równie¿ potrzebne s¹ do sprawdzenia
+    powitanie();
+    pvsp(tab);
+
+    return 0;
+}
+
+void plansza(char tab[],string imiep1,string imiep2,string imie1,string imie2,int score1,int score2)
+{
+    cout<<endl<<endl;
+    cout<<imiep1<<" (x)     "<<imiep2<<" (o)"<<endl;
+
+
+    cout<<"["<<tab[0]<<"]"<<"["<<tab[1]<<"]"<<"["<<tab[2]<<"]"<<"                              wyniki"<<endl;
+    cout<<"["<<tab[3]<<"]"<<"["<<tab[4]<<"]"<<"["<<tab[5]<<"]"<<"                              "<<imie1<<" "<<score1<<" punktow"<<endl;
+    cout<<"["<<tab[6]<<"]"<<"["<<tab[7]<<"]"<<"["<<tab[8]<<"]"<<"                              "<<imie2<<" "<<score2<<" punktow"<<endl;
+}
+void pvspp1(char *tab,bool &ps,int pozycja,char p1,char p2,string imiep1,string imiep2,int x,string imie1,string imie2,int score1,int score2,string wygrany,int runde)//funkcja odpowiadajaca za sprawdzanie czy pozycja jest ju¿  zajêta
+{
+    if(tab[pozycja]==p1||tab[pozycja]==p2)
+    {
+        cout<<"pozycja zajeta podaj inna"<<endl;
+        ps=true;
+    }
+    else
+    {
+        tab[pozycja]=p1;
+        system("cls");
+        cout<<"."<<x<<"."<<endl;
+        plansza(tab,imiep1,imiep2,imie1,imie2,score1,score2);
+        ps=false;
+
+    }
+
+
+}
+void pvspp2(char *tab,bool &ps,int pozycja,char p1,char p2,string imiep1,string imiep2,int x,string imie1,string imie2,int score1,int score2,string wygrany,int runde) //to samo co w pvspp1
+{
+    if(tab[pozycja]==p1||tab[pozycja]==p2)
+    {
+        cout<<"pozycja zajeta podaj inna"<<endl;
+        ps=true;
+    }
+    else
+    {
+        tab[pozycja]=p2;
+        system("cls");
+        cout<<"."<<x<<"."<<endl;
+        plansza(tab,imiep1,imiep2,imie1,imie2,score1,score2);
+        ps=false;
+
+    }
+
+
+}
+void pvsp(char *tab)
+{
+    string wygrany,imiep1,imiep2,imie1,imie2;
+    int p1w=0,p2w=0,runda=0,imie1score=0,imie2score=0,runde=1;
+    bool koniec=false,ps=true,continuee=true;
+    int x=0,pozycja=0;
+    char p1='x',p2='o',pozycja2,kont=48;
+
+    cout<<"podaj nazwe gracza ktory zaczyna"<<endl;
+    cin>>imie1;
+
+    cout<<"podaj nazwa 2 gracza"<<endl;
+    do
+    {
+        cout<<"nazwa musi byc rozne od nazwy gracza "<<imie1<<endl;
+        cin>>imie2;
+    }
+    while(imie1==imie2);
+
+
+    do
+    {
+        system("cls");
+        if(runde>1)
+        {
+            cout<<runde-1<<" runde wygral "<<wygrany<<endl;
+        }
+        if(runda==0)
+        {
+            imiep1=imie1;
+            imiep2=imie2;
+        }
+        else if(runda==1)
+        {
+            imiep1=imie2;
+            imiep2=imie1;
+        }
+
+
+
+
+
+        plansza(tab,imiep1,imiep2,imie1,imie2,imie1score,imie2score);
+
+
+        while(koniec!=true)
+        {
+            switch(x)
+            {
+            case 0:
+            case 2:
+            case 4:
+            case 6:
+            case 8:
+            {
+
+
+                cout<<"graczu "<<imiep1<<" podaj pozycje"<<endl;
+                wygrany=imiep1;
+                while(ps==true)
+                {
+
+                    pozycja=kontrolaznakow();
+
+                    switch(pozycja)
+                    {
+                    case 0:
+                        pvspp1(tab,ps,pozycja,p1,p2,imiep1,imiep2,x,imie1,imie2,imie1score,imie2score,wygrany,runde);
+                        break;
+                    case 1:
+                        pvspp1(tab,ps,pozycja,p1,p2,imiep1,imiep2,x,imie1,imie2,imie1score,imie2score,wygrany,runde);
+                        break;
+                    case 2:
+                        pvspp1(tab,ps,pozycja,p1,p2,imiep1,imiep2,x,imie1,imie2,imie1score,imie2score,wygrany,runde);
+                        break;
+                    case 3:
+                        pvspp1(tab,ps,pozycja,p1,p2,imiep1,imiep2,x,imie1,imie2,imie1score,imie2score,wygrany,runde);
+                        break;
+                    case 4:
+                        pvspp1(tab,ps,pozycja,p1,p2,imiep1,imiep2,x,imie1,imie2,imie1score,imie2score,wygrany,runde);
+                        break;
+                    case 5:
+                        pvspp1(tab,ps,pozycja,p1,p2,imiep1,imiep2,x,imie1,imie2,imie1score,imie2score,wygrany,runde);
+                        break;
+                    case 6:
+                        pvspp1(tab,ps,pozycja,p1,p2,imiep1,imiep2,x,imie1,imie2,imie1score,imie2score,wygrany,runde);
+                        break;
+                    case 7:
+                        pvspp1(tab,ps,pozycja,p1,p2,imiep1,imiep2,x,imie1,imie2,imie1score,imie2score,wygrany,runde);
+                        break;
+                    case 8:
+                        pvspp1(tab,ps,pozycja,p1,p2,imiep1,imiep2,x,imie1,imie2,imie1score,imie2score,wygrany,runde);
+                        break;
+                    }
+
+                }
+            }
+            break;
+
+            case 1:
+            case 3:
+            case 5:
+            case 7:
+            {
+
+
+                cout<<"graczu "<<imiep2<<" podaj pozycje"<<endl;
+                wygrany=imiep2;
+                while(ps==true)
+                {
+
+
+
+                    pozycja=kontrolaznakow();
+
+                    while(pozycja<0 || pozycja>8);
+
+
+                    switch(pozycja)
+                    {
+                    case 0:
+                        pvspp2(tab,ps,pozycja,p1,p2,imiep1,imiep2,x,imie1,imie2,imie1score,imie2score,wygrany,runde);
+                        break;
+                    case 1:
+                        pvspp2(tab,ps,pozycja,p1,p2,imiep1,imiep2,x,imie1,imie2,imie1score,imie2score,wygrany,runde);
+                        break;
+                    case 2:
+                        pvspp2(tab,ps,pozycja,p1,p2,imiep1,imiep2,x,imie1,imie2,imie1score,imie2score,wygrany,runde);
+                        break;
+                    case 3:
+                        pvspp2(tab,ps,pozycja,p1,p2,imiep1,imiep2,x,imie1,imie2,imie1score,imie2score,wygrany,runde);
+                        break;
+                    case 4:
+                        pvspp2(tab,ps,pozycja,p1,p2,imiep1,imiep2,x,imie1,imie2,imie1score,imie2score,wygrany,runde);
+                        break;
+                    case 5:
+                        pvspp2(tab,ps,pozycja,p1,p2,imiep1,imiep2,x,imie1,imie2,imie1score,imie2score,wygrany,runde);
+                        break;
+                    case 6:
+                        pvspp2(tab,ps,pozycja,p1,p2,imiep1,imiep2,x,imie1,imie2,imie1score,imie2score,wygrany,runde);
+                        break;
+                    case 7:
+                        pvspp2(tab,ps,pozycja,p1,p2,imiep1,imiep2,x,imie1,imie2,imie1score,imie2score,wygrany,runde);
+                        break;
+                    case 8:
+                        pvspp2(tab,ps,pozycja,p1,p2,imiep1,imiep2,x,imie1,imie2,imie1score,imie2score,wygrany,runde);
+                        break;
+                    }
+
+                }
+            }
+            break;
+            case 9:
+                cout<<"REMIS"<<endl;
+                koniec=true;
+                wygrany="malpa";
+                break;
+
+            }
+
+            x++;
+            ps=true;
+            if(sprawdzanie(tab)==true)
+            {
+                koniec=true;
+            }
+        }
+        if(wygrany==imie1)
+        {
+            imie1score++;
+            runda=1;
+        }
+        else if(wygrany==imie2)
+        {
+            imie2score++;
+            runda=0;
+        }
+
+        do
+        {
+            cout<<"podaj 1 jezeli chcesz kontynuowac lub 2 jezeli chcesz przerwac"<<endl<<endl;
+            cin>>kont;
+        }
+        while(kont<49||kont>50);
+
+        if(kont==50)
+        {
+            continuee=false;
+        }
+        else
+        {
+            continuee=true;
+        }
+        koniec=false;
+        x=0;
+        ps=true;
+        char cos=48;
+        runde++;
+        for(int i=0; i<9; i++)
+        {
+            tab[i]=cos;
+            cos++;
+        }
+    }
+    while(continuee==true);
+
+    system("cls");
+    cout<<"wynik koncowy"<<endl;
+    cout<<imie1<<" zdobyl/a "<<imie1score<<" punktow"<<endl;
+    cout<<imie2<<" zdobyl/a "<<imie2score<<" punktow"<<endl;
+    cout<<"gra trwala "<<runde-1<<" rund"<<endl;
+    if(imie1score>imie2score)
+    {
+        cout<<"wygral/a "<<imie1<<endl;
+    }
+    else if(imie1score==imie2score)
+    {
+        cout<<"REMIS"<<endl;
+    }
+    else
+    {
+        cout<<"wygral/a "<<imie2<<endl;
+    }
+
+
+
+
+}
+void powitanie()
+{
+    cout<<"witaj w grze kolko i krzyzyk"<<endl<<endl;
+
+}
+
+bool sprawdzanie(char tab[])
+{
+    if(tab[0]==tab[1]&&tab[0]==tab[2]||tab[3]==tab[4]&&tab[3]==tab[5]||tab[6]==tab[7]&&tab[6]==tab[8]||tab[0]==tab[3]&&tab[0]==tab[6]||tab[1]==tab[4]&&tab[1]==tab[7]||tab[2]==tab[5]&&tab[2]==tab[8]||tab[0]==tab[4]&&tab[0]==tab[8]||tab[2]==tab[4]&&tab[2]==tab[6])
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+int kontrolaznakow()
+{
+    int liczba=0;
+    string pozycja2;
+
+    do
+    {
+
+
+        cin>>pozycja2;
+        if(pozycja2[0]<48 || pozycja2[0]>56)
+        {
+            cout<<"podaj liczbe z zakresu od 0 do 8"<<endl;
+        }
+    }
+    while(pozycja2[0]<48 || pozycja2[0]>56);
+
+
+    return pozycja2[0]-48;
+
+}
+
